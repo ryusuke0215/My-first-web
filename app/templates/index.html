@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Iris</title>
+    </head>
+    <body>
+        <h1>Iris診断</h1>
+        {% if error %}
+        <p>入力が正しくありません。</p>
+        <p>全てに数値を入力してください。</p>
+        {% endif %}
+        <form action="/pred" method="POST">
+            <input type="text" name="sepal_length" placeholder="ガクの長さ(cm)">
+            <input type="text" name="sepal_width" placeholder="ガクの幅(cm)">
+            <input type="text" name="petal_length" placeholder="花弁の長さ(cm)">
+            <input type="text" name="petal_width" placeholder="花弁の幅(cm)">
+            <input type="submit" value="診断">
+        </form>
+        {% if name %}
+        <h3>診断結果: {{name}}</h3>
+        <img src="/static/images/{{name}}.jpeg", alt="サンプル">
+        <p>出典: <cite><a href="https://medium.com/@jebaseelanravi96/machine-learning-iris-classification-33aa18a4a983">Machine learning-Iris classification</a></cite></p>
+        {% else %}
+        <h3>診断結果: </h3>
+        {% endif %}
+    </body>
+</html>
