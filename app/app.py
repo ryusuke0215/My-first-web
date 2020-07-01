@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask import redirect, url_for
 import pickle
+import json
 import numpy as np
 
 app          = Flask(__name__)
@@ -10,9 +11,10 @@ sepal_length = None
 sepal_width  = None
 petal_length = None
 petal_width  = None
+count        = 0
 
 # オブジェクトの呼び出し
-with open('./app/model.pickle', 'rb') as f:
+with open('./app/static/model/model.pickle', 'rb') as f:
     clf = pickle.load(f)
 
 # index.htmlへ移動
@@ -46,7 +48,7 @@ def add():
 # データを追加
 @app.route("/add_data", methods=["post"])
 def add_data():
-    global datasets, iris, sepal_length, sepal_width, petal_length, petal_width
+    global count, datasets, iris, sepal_length, sepal_width, petal_length, petal_width
     try:
         new_sepal_length = float(request.form["sepal_length"])
         new_sepal_width  = float(request.form["sepal_width"])
@@ -67,14 +69,19 @@ def add_data():
     sepal_width  = None
     petal_length = None
     petal_width  = None
+    count       += 1
     
-    return render_template("add.html", iris=iris)
+    with open("./app/static/jsons/{:06d}.json".format(count), "w") as f:
+        json.dump(datasets, f, indent=4, ensure_ascii=False)
+    
+    datasets = {'data': [], 'answer': []}
+    return render_template("Top.html")
 
 # データを見る
-@app.route("/show_data")
-def show_data():
-    global datasets
-    return render_template("show.html", datasets=datasets)
+#@app.route("/show_data")
+#def show_data():
+#    global datasets
+#    return render_template("show.html", datasets=datasets)
 
 if __name__ == "__main__":
     app.run(debug=True)
