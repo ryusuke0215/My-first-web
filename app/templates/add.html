@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Add_Data</title>
+    </head>
+    <body>
+        <h1>データの追加</h1>
+        <p><a href="/">診断画面へ</a>・<a href="/show_data">データをみる</a></p>
+
+        {% if error %}
+        <p>入力が正しくありません。</p>
+        <p>全てに数値を入力してください。</p>
+        {% endif %}
+
+        {% if sepal_length and sepal_length and petal_length and petal_width %}
+        <form action="/add_data" method="POST" id="add_data">
+            <p>ガクの長さ(cm) : <input type="text" name="sepal_length" value="{{sepal_length}}"></p>
+            <p>ガクの幅(cm)   : <input type="text" name="sepal_width" value="{{sepal_width}}"></p>
+            <p>花弁の長さ(cm) : <input type="text" name="petal_length" value="{{petal_length}}"></p>
+            <p>花弁の幅(cm)   : <input type="text" name="petal_width" value="{{petal_width}}"></p>
+        </form>
+        {% else %}
+        <form action="/add_data" method="POST" id="add_data">
+            <p>ガクの長さ(cm) : <input type="text" name="sepal_length"></p>
+            <p>ガクの幅(cm)   : <input type="text" name="sepal_width"></p>
+            <p>花弁の長さ(cm) : <input type="text" name="petal_length"></p>
+            <p>花弁の幅(cm)   : <input type="text" name="petal_width"></p>
+        </form>
+        {% endif %}
+
+        {% for name in iris %}
+        <input type="radio" name="answer" form="add_data" value={{name}}>
+        {{name}}
+        {% endfor %}
+
+        <input type="submit" form="add_data" value="追加">
+        </form>
+    </body>
+</html>
