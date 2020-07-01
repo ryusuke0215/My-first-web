@@ -5,9 +5,11 @@
     </head>
     <body>
         <h1>Iris診断</h1>
+
         {% if error %}
         <p>入力が正しくありません。</p>
         <p>全てに数値を入力してください。</p>
+        
         {% endif %}
         <form action="/pred" method="POST">
             <input type="text" name="sepal_length" placeholder="ガクの長さ(cm)">
@@ -16,6 +18,7 @@
             <input type="text" name="petal_width" placeholder="花弁の幅(cm)">
             <input type="submit" value="診断">
         </form>
+
         {% if name %}
         <h3>診断結果: {{name}}</h3>
         <img src="/static/images/{{name}}.jpeg", alt="サンプル">
@@ -23,5 +26,8 @@
         {% else %}
         <h3>診断結果: </h3>
         {% endif %}
+
+        <a href="/add">データ追加画面へ</a>
+        <!--<p><a href="/show_data">データをみる</a>・<a href="/add">データ追加画面へ</a></p>-->
     </body>
 </html>
