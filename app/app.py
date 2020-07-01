@@ -48,14 +48,26 @@ def add():
 def add_data():
     global datasets, iris, sepal_length, sepal_width, petal_length, petal_width
     try:
-        datasets["data"].append(float(request.form["sepal_length"]))
-        datasets["data"].append(float(request.form["sepal_width"]))
-        datasets["data"].append(float(request.form["petal_length"]))
-        datasets["data"].append(float(request.form["petal_width"]))
-        datasets["answer"].append(int(iris.index(request.form["answer"])))
+        new_sepal_length = float(request.form["sepal_length"])
+        new_sepal_width  = float(request.form["sepal_width"])
+        new_petal_length = float(request.form["petal_length"])
+        new_petal_width  = float(request.form["petal_width"])
+        new_answer       = int(iris.index(request.form["answer"]))
+        
     except:
         return render_template("add.html", sepal_length=sepal_length, sepal_width=sepal_width, petal_length=petal_length, petal_width=petal_width, iris=iris, error="error")
-        
+    
+    datasets["data"].append(new_sepal_length)
+    datasets["data"].append(new_sepal_width)
+    datasets["data"].append(new_petal_length)
+    datasets["data"].append(new_petal_width)
+    datasets["answer"].append(new_answer)
+
+    sepal_length = None
+    sepal_width  = None
+    petal_length = None
+    petal_width  = None
+    
     return render_template("add.html", iris=iris)
 
 # データを見る
